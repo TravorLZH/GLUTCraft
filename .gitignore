@@ -1,9 +1,0 @@
-CMakeFiles/
-*~
-*.exe
-*.o
-*.lib
-CMakeCache.txt
-*install*
-*.cmake
-Makefile

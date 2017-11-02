@@ -1,2 +1,0 @@
-C:/Program Files (x86)/GLUTCraft/bin/GLUTCraft.exe
-C:/Program Files (x86)/GLUTCraft/include/utils.h
