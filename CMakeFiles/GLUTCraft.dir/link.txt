@@ -1,1 +1,0 @@
-C:\MinGW\bin\gcc.exe    -Wl,@CMakeFiles\GLUTCraft.dir\objects1.rsp  -o GLUTCraft.exe -Wl,--out-implib,libGLUTCraft.dll.a -Wl,--major-image-version,0,--minor-image-version,0 -lopengl32 -lglu32 -lfreeglut -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32 

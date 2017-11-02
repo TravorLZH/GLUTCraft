@@ -1,7 +1,0 @@
-C:/Users/liut21/GLUTCraft/CMakeFiles/install.dir
-C:/Users/liut21/GLUTCraft/CMakeFiles/rebuild_cache.dir
-C:/Users/liut21/GLUTCraft/CMakeFiles/GLUTCraft.dir
-C:/Users/liut21/GLUTCraft/CMakeFiles/edit_cache.dir
-C:/Users/liut21/GLUTCraft/CMakeFiles/list_install_components.dir
-C:/Users/liut21/GLUTCraft/CMakeFiles/install/strip.dir
-C:/Users/liut21/GLUTCraft/CMakeFiles/install/local.dir
