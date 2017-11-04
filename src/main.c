@@ -23,7 +23,7 @@ camera_t camera;
 
 int FOV = 70;
 
-void printStuff(LPVOID param) {
+void printStuff(void){
 	system("cls");
 	printf("======MOUSE======\n");
 	printf("X:\t%f (%d)\n", mouse.coordx, mouse.x);
