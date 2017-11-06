@@ -90,7 +90,7 @@ void keyFunc(unsigned char key, int x, int y) {
 		camera.z += 0.05f;
 		break;
 	case 'a':case 'A':
-		camera.x -= 0.05f;
+			camera.x -= 0.05f;
 		break;
 	case 'd':case 'D':
 		camera.x += 0.05f;
