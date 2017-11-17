@@ -1,4 +1,3 @@
-#pragma once
 #include <utils.h>
 #include <GL/glut.h>
 #include <ctype.h>
@@ -24,7 +23,11 @@ camera_t camera;
 int FOV = 70;
 
 void printStuff(void){
+#ifdef _WIN32
 	system("cls");
+#else
+	system("clear");
+#endif
 	printf("======MOUSE======\n");
 	printf("X:\t%f (%d)\n", mouse.coordx, mouse.x);
 	printf("Y:\t%f (%d)\n", mouse.coordy, mouse.y);
@@ -49,6 +52,7 @@ void coordinatePerspective() {
 	camera.pitch = camera.pitch <= -90.0f ? camera.pitch=-90.0f : camera.pitch;
 	glRotatef(-camera.pitch, 1.0f, 0.0f, 0.0f);
 	glRotatef(-camera.yaw, 0.0f, 1.0f, 0.0f);
+	toxz(&camera.x,&camera.z,camera.yaw);
 	glTranslatef(-camera.x, -camera.y, -camera.z);
 }
 void init() {
