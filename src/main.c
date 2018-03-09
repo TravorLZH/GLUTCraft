@@ -1,4 +1,6 @@
-#include <dimconv.h>
+#include <glutcraft.h>
+#include <glutcraft/debugscreen.h>
+#include <glutcraft/dimconv.h>
 #include <GL/glut.h>
 #include <ctype.h>
 #include <stdio.h>
@@ -12,39 +14,13 @@
 #define BAR(x) (x*PI/180)
 #define GRAVITY	0.02f	// Gravity
 
-typedef struct _mouse {
-	char grab;
-	int x;
-	int y;
-}mouse_t;
-typedef struct _camera {
-	float pitch;
-	float yaw;
-	float x;
-	float y;
-	float z;
-}camera_t;
-
 mouse_t mouse;
 camera_t camera;
+window_t window;
 
 int FOV = 70;
 
-void printStuff(void){
-#ifdef _WIN32
-	system("cls");
-#else
-	system("clear");
-#endif
-	printf("======MOUSE======\n");
-	printf("X:\t%f (%d)\n", getScreenX(mouse.x), mouse.x);
-	printf("Y:\t%f (%d)\n", getScreenY(mouse.y), mouse.y);
-	printf("=====CAMERA======\n");
-	printf("X: %f, Y: %f, Z: %f\n", camera.x, camera.y, camera.z);
-	printf("Pitch: %f, Yaw: %f\n", camera.pitch, camera.yaw);
-}
-
-void centerCursor() {
+void centerCursor(void) {
 	int centerX=getWindowX(0);
 	int centerY=getWindowY(0);
 	if(mouse.x!=centerX || mouse.y!=centerY){
@@ -54,7 +30,7 @@ void centerCursor() {
 	}
 }
 
-void coordinatePerspective() {
+void coordinatePerspective(void) {
 	camera.yaw = (float)(((int)camera.yaw) % 360);
 	camera.pitch = camera.pitch >= 90.0f ? camera.pitch=90.0f : camera.pitch;
 	camera.pitch = camera.pitch <= -90.0f ? camera.pitch=-90.0f : camera.pitch;
@@ -63,7 +39,8 @@ void coordinatePerspective() {
 	glTranslatef(-camera.x, -camera.y, -camera.z);
 }
 
-void drawLevel() {
+void drawLevel(void) {
+	glColor3f(0.0f,1.0f,0.0f);
 	glutWireTeapot(0.5);
 }
 
@@ -71,6 +48,7 @@ void display(void) {
 	glPushMatrix();
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT);
+	showDebugText(mouse,window,camera);
 	coordinatePerspective();
 	drawLevel();
 	glFlush();
@@ -115,6 +93,8 @@ void keyFunc(unsigned char key, int x, int y) {
 
 void reshape(int w, int h) {
 	glViewport(0, 0, w, h);
+	window.width=w;
+	window.height=h;
 	setWindowSize(w,h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();
@@ -153,14 +133,13 @@ int main(int argc, char** argv) {
 	memset(&camera, 0, sizeof(camera));
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
-	glutInitWindowSize(300, 300);
+	glutInitWindowSize(1000, 600);
 	glutCreateWindow("GLUT Craft");
 	glutReshapeFunc(&reshape);
 	glutDisplayFunc(&display);
 	glutSpecialFunc(&specialKeys);
 	glutPassiveMotionFunc(&motionFunc);
 	glutKeyboardFunc(&keyFunc);
-	glutIdleFunc(&printStuff);
 	glutTimerFunc(1000 / FPS, &frameFunc, 0);
 	glutMainLoop();
 	return 0;
