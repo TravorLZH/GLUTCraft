@@ -1,4 +1,4 @@
-#include <utils.h>
+#include <dimconv.h>
 #include <GL/glut.h>
 #include <ctype.h>
 #include <stdio.h>
@@ -6,16 +6,24 @@
 #include <string.h>
 #include <stdbool.h>
 #include <math.h>
-#define CX(x)	((((float)x)/150)-1.0f)
-#define CY(y)	((((float)-y)/150)+1.0f)
-#define WX(x)	((int)((x+1.0f)*150.0f))
-#define WY(y)	((int)((y-1.0f)*150.0f))
 #define FPS 20
 #define FOO 30
 #define PI 3.1415926535f
-#define POOP distance*tan(60.0f)
 #define BAR(x) (x*PI/180)
-#define g	0.02f
+#define GRAVITY	0.02f	// Gravity
+
+typedef struct _mouse {
+	char grab;
+	int x;
+	int y;
+}mouse_t;
+typedef struct _camera {
+	float pitch;
+	float yaw;
+	float x;
+	float y;
+	float z;
+}camera_t;
 
 mouse_t mouse;
 camera_t camera;
@@ -29,21 +37,21 @@ void printStuff(void){
 	system("clear");
 #endif
 	printf("======MOUSE======\n");
-	printf("X:\t%f (%d)\n", mouse.coordx, mouse.x);
-	printf("Y:\t%f (%d)\n", mouse.coordy, mouse.y);
+	printf("X:\t%f (%d)\n", getScreenX(mouse.x), mouse.x);
+	printf("Y:\t%f (%d)\n", getScreenY(mouse.y), mouse.y);
 	printf("=====CAMERA======\n");
 	printf("X: %f, Y: %f, Z: %f\n", camera.x, camera.y, camera.z);
 	printf("Pitch: %f, Yaw: %f\n", camera.pitch, camera.yaw);
 }
 
-void keepCursor() {
-	mouse.x = mouse.x > 300 ? 300 : mouse.x;
-	mouse.x = mouse.x < 0 ? 0 : mouse.x;
-	mouse.y = mouse.y > 300 ? 300 : mouse.y;
-	mouse.y = mouse.y < 0 ? 0 : mouse.y;
-	mouse.coordx = CX(mouse.x);
-	mouse.coordy = CY(mouse.y);
-	glutWarpPointer(mouse.x, mouse.y);
+void centerCursor() {
+	int centerX=getWindowX(0);
+	int centerY=getWindowY(0);
+	if(mouse.x!=centerX || mouse.y!=centerY){
+		mouse.x=centerX;
+		mouse.y=centerY;
+		glutWarpPointer(mouse.x,mouse.y);
+	}
 }
 
 void coordinatePerspective() {
@@ -52,19 +60,11 @@ void coordinatePerspective() {
 	camera.pitch = camera.pitch <= -90.0f ? camera.pitch=-90.0f : camera.pitch;
 	glRotatef(-camera.pitch, 1.0f, 0.0f, 0.0f);
 	glRotatef(-camera.yaw, 0.0f, 1.0f, 0.0f);
-	toxz(&camera.x,&camera.z,camera.yaw);
 	glTranslatef(-camera.x, -camera.y, -camera.z);
-}
-void init() {
-	glMatrixMode(GL_PROJECTION);
-	glLoadIdentity();
-	gluPerspective(60, 1, 0, 10);
-	glMatrixMode(GL_MODELVIEW);
-	glLoadIdentity();
 }
 
 void drawLevel() {
-	glutWireCube(0.5);
+	glutWireTeapot(0.5);
 }
 
 void display(void) {
@@ -78,8 +78,10 @@ void display(void) {
 }
 
 void frameFunc(int arg) {
-	keepCursor();
 	glutPostRedisplay();
+	if(mouse.grab==1){
+		centerCursor();
+	}
 	glutTimerFunc(1000 / FPS, &frameFunc, 0);
 }
 void keyFunc(unsigned char key, int x, int y) {
@@ -87,30 +89,38 @@ void keyFunc(unsigned char key, int x, int y) {
 	case 27:
 		exit(0);
 		break;
-	case 'w':case 'W':
+	case 'w':case 'W':	// Go backward
 		camera.z -= 0.05f;
 		break;
-	case 's':case 'S':
+	case 's':case 'S':	// Go forward
 		camera.z += 0.05f;
 		break;
-	case 'a':case 'A':
+	case 'a':case 'A':	// Go left
 			camera.x -= 0.05f;
 		break;
-	case 'd':case 'D':
+	case 'd':case 'D':	// Go right
 		camera.x += 0.05f;
 		break;
-	case 'j':
+	case 'j':	// Go down
 		camera.y += 0.05f;
 		break;
-	case 'k':
+	case 'k':	// Go up
 		camera.y -= 0.05f;
 		break;
+	case 'm':	// Toggle mouse grab
+		mouse.grab=mouse.grab? 0:1;
 	}
 	glutPostRedisplay();
 }
 
 void reshape(int w, int h) {
-	glViewport(0, h-300, 300, 300);
+	glViewport(0, 0, w, h);
+	setWindowSize(w,h);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(60, ((float)w)/((float)h), 0, 10);
+	glMatrixMode(GL_MODELVIEW);
+	glLoadIdentity();
 	glutPostRedisplay();
 }
 
@@ -135,8 +145,6 @@ void specialKeys(int key, int x, int y) {
 void motionFunc(int x, int y) {
 	mouse.x = x;
 	mouse.y = y;
-	mouse.coordx = CX(x);
-	mouse.coordy = CY(y);
 	glutPostRedisplay();
 }
 
@@ -149,7 +157,6 @@ int main(int argc, char** argv) {
 	glutCreateWindow("GLUT Craft");
 	glutReshapeFunc(&reshape);
 	glutDisplayFunc(&display);
-	init();
 	glutSpecialFunc(&specialKeys);
 	glutPassiveMotionFunc(&motionFunc);
 	glutKeyboardFunc(&keyFunc);
