@@ -4,5 +4,6 @@ CMakeCache.txt
 Makefile
 install_manifest.txt
 *.exe
-build/
+bin/
+lib/
 CMakeFiles/
