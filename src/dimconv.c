@@ -1,5 +1,5 @@
 #include <assert.h>
-#include <dimconv.h>
+#include <glutcraft/dimconv.h>
 
 float width=0;
 float height=0;
@@ -19,12 +19,12 @@ float getScreenY(int y){
 	return (((float)-y)/(height/2))+1.0f;
 }
 
-int getWindowX(int x){
+int getWindowX(float x){
 	assert(width!=0.0f);
 	return (int)((x+1.0f)*width/2);
 }
 
-int getWindowY(int y){
+int getWindowY(float y){
 	assert(height!=0.0f);
 	return (int)(-(y-1.0f)*height/2);
 }
