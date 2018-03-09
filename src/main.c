@@ -17,6 +17,7 @@
 mouse_t mouse;
 camera_t camera;
 window_t window;
+bool dbgScreen=0;
 
 int FOV = 70;
 
@@ -48,7 +49,9 @@ void display(void) {
 	glPushMatrix();
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT);
-	showDebugText(mouse,window,camera);
+	if(dbgScreen){
+		showDebugText(mouse,window,camera);
+	}
 	coordinatePerspective();
 	drawLevel();
 	glFlush();
@@ -117,6 +120,9 @@ void specialKeys(int key, int x, int y) {
 		break;
 	case GLUT_KEY_DOWN:
 		camera.pitch-=1.0f;
+		break;
+	case GLUT_KEY_F3:
+		dbgScreen=dbgScreen?0:1;
 		break;
 	}
 	glutPostRedisplay();
