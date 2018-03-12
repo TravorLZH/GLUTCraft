@@ -78,14 +78,14 @@ void display(void) {
 	glPushMatrix();
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT);
+	coordinatePerspective();
+	drawLevel();
+	glPopMatrix();
 	cross(50,50);
 	if(dbgScreen){
 		showDebugText(mouse,window,camera);
 	}
-	coordinatePerspective();
-	drawLevel();
 	glFlush();
-	glPopMatrix();
 }
 
 void frameFunc(int arg) {
