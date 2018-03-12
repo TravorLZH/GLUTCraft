@@ -20,6 +20,7 @@ target_link_libraries(glutcraft-core ${GL_LIBS})
 target_link_libraries(glutcraft ${GL_LIBS} glutcraft-core)
 install (TARGETS glutcraft glutcraft-core
 	RUNTIME DESTINATION bin
+	LIBRARY	DESTINATION lib
 	ARCHIVE DESTINATION lib
 )
 install (DIRECTORY include DESTINATION ${CMAKE_INSTALL_PREFIX})
