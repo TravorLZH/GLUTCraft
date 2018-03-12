@@ -1,6 +1,7 @@
 #include <glutcraft.h>
 #include <glutcraft/debugscreen.h>
 #include <glutcraft/dimconv.h>
+#include <glutcraft/movement.h>
 #include <GL/glut.h>
 #include <ctype.h>
 #include <stdio.h>
@@ -9,9 +10,6 @@
 #include <stdbool.h>
 #include <math.h>
 #define FPS 20
-#define FOO 30
-#define PI 3.1415926535f
-#define BAR(x) (x*PI/180)
 #define GRAVITY	0.02f	// Gravity
 
 mouse_t mouse;
@@ -70,14 +68,14 @@ void keyFunc(unsigned char key, int x, int y) {
 	case 27:
 		exit(0);
 		break;
-	case 'w':case 'W':	// Go backward
-		camera.z -= 0.05f;
+	case 'w':case 'W':	// Go forward
+		moveForward(&camera,0.05f);
 		break;
-	case 's':case 'S':	// Go forward
-		camera.z += 0.05f;
+	case 's':case 'S':	// Go backward
+		moveForward(&camera,-0.05f);
 		break;
 	case 'a':case 'A':	// Go left
-			camera.x -= 0.05f;
+		camera.x -= 0.05f;
 		break;
 	case 'd':case 'D':	// Go right
 		camera.x += 0.05f;
