@@ -66,7 +66,7 @@ mingw32-make install
 
 ## Linux
 
-[![asciinema](https://asciinema.org/a/169118)](https://asciinema.org/a/169118.png)
+[![asciinema](https://asciinema.org/a/169118.png)](https://asciinema.org/a/169118)
 
 You must have `build-essential` installed. Then type:
 
