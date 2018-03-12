@@ -66,6 +66,8 @@ mingw32-make install
 
 ## Linux
 
+[![linuxbuild](https://asciinema.org/a/169118)](https://asciinema.org/a/169118.png)
+
 You must have `build-essential` installed. Then type:
 
 ```shell
