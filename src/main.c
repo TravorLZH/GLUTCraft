@@ -43,10 +43,42 @@ void drawLevel(void) {
 	glutWireTeapot(0.5);
 }
 
+void cross(size_t width,size_t height){
+	float x1=-getScreenDistance(window.width,width/2);
+	float y1=getScreenDistance(window.height,height/2);
+	float x2=getScreenDistance(window.width,width/2);
+	float y2=-getScreenDistance(window.height,height/2);
+	glPushMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glPushMatrix();
+	glLoadIdentity();
+	gluOrtho2D(0,window.width,0,window.height);
+	glPushMatrix();
+	glLoadIdentity();
+	glPushAttrib(GL_LINE_BIT);
+	glColor3f(1.0f,1.0f,1.0f);
+	glLineWidth(2.0f);
+	glScalef(0.5f,0.5f,0.5f);
+	glBegin(GL_LINES);
+	glVertex2f(x1,0.0f);
+	glVertex2f(x2,0.0f);
+	glEnd();
+	glBegin(GL_LINES);
+	glVertex2f(0.0f,y1);
+	glVertex2f(0.0f,y2);
+	glEnd();
+	glPopAttrib();
+	glPopMatrix();
+	glMatrixMode(GL_PROJECTION);
+	glPopMatrix();
+	glMatrixMode(GL_MODELVIEW);
+}
+
 void display(void) {
 	glPushMatrix();
 	glLoadIdentity();
 	glClear(GL_COLOR_BUFFER_BIT);
+	cross(50,50);
 	if(dbgScreen){
 		showDebugText(mouse,window,camera);
 	}
@@ -75,10 +107,10 @@ void keyFunc(unsigned char key, int x, int y) {
 		moveForward(&camera,-0.05f);
 		break;
 	case 'a':case 'A':	// Go left
-		camera.x -= 0.05f;
+		moveSide(&camera,-0.05f);
 		break;
 	case 'd':case 'D':	// Go right
-		camera.x += 0.05f;
+		moveSide(&camera,0.05f);
 		break;
 	case 'j':	// Go down
 		camera.y += 0.05f;

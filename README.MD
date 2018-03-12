@@ -33,19 +33,26 @@ I would like to list my features in this game. The feature list is basically the
 
 * **Debug Screen** You can press <kbd>F3</kbd> to display data in the display.
 
+* **Turning moving directions** The direction of head will decide the direction to move.
+
+* **Crosshair in the center of screen** You can see a crosshair similar to Minecraft's in the screen.
+
 ### Developing
 
 * **Turning head using mouse** Your mouse is always centered after pressing <kbd>M</kbd> because I am attempting to implement this features.
-
-* **Turning moving directions** The direction of head will decide the direction to move
 
 ## Installation Guide
 
 To build this game, you need to install the following packages first:
 
-* [freeglut3](http://freeglut.sourceforge.net) It's necessary because all my code relies on it. Make sure the option
+* [FreeGLUT](http://freeglut.sourceforge.net) It's necessary because all my code relies on it. Make sure the option **FREEGLUT_BUILD_SHARED_LIBS** is set to **ON**. To install it on Debian Linux, you may use the following command.
 
-* [cmake](https://cmake.org") The building system I use because it supports building on different platforms.
+```
+# apt-get update
+# apt-get install freeglut3-dev
+```
+
+* [CMake](https://cmake.org") The building system I use because it supports building on different platforms.
 
 ### Windows with MinGW
 

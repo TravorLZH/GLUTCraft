@@ -28,3 +28,13 @@ int getWindowY(float y){
 	assert(height!=0.0f);
 	return (int)(-(y-1.0f)*height/2);
 }
+
+int getWindowDistance(int dim,float screenDistance){
+	assert(dim!=0);
+	return screenDistance*dim/2;
+}
+
+float getScreenDistance(int dim,int windowDistance){
+	assert(dim!=0);
+	return ((float)windowDistance)/(dim/2);
+}
