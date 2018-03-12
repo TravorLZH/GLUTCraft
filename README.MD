@@ -1,7 +1,7 @@
 GLUTCraft - A 3D Game written in C with [Freeglut](http://freeglut.sourceforge.net)
 ====
 
-![preview](https://i.imgur.com/6DjM9BI.png)
+![preview](screenshots/latest.png)
 
 This game is inspired by [Minecraft](https://www.minecraft.net), so you can discover some similarities. Just like [TravorOS](https://github.com/TravorLZH/TravorOS), it is still implementing basic features. Now you can browse the world using the same keys in Minecraft.
 
