@@ -1,4 +1,6 @@
+/* dbgscreen: Debug Screen */
 #include <stdio.h>
+#include <string.h>	// memset
 #include <assert.h>
 #include <GL/gl.h>
 #include <GL/glu.h>
@@ -11,7 +13,7 @@
 static void printStringAt(const char *str,int x,int y){
 	assert(x>=0);
 	assert(y>=0);
-	glRasterPos2i(x,y);
+	glRasterPos2i(x,y);	// Just like we move the cursor in VGA
 	int i;
 	int len=strlen(str);
 	for(i=0;i<len;i++){

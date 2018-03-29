@@ -1,3 +1,4 @@
+/* main.c: The source of glutcraft executable */
 #include <glutcraft.h>
 #include <glutcraft/debugscreen.h>
 #include <glutcraft/dimconv.h>
@@ -15,6 +16,7 @@
 mouse_t mouse;
 camera_t camera;
 window_t window;
+// The switch of showing debug screen or not.
 bool dbgScreen=0;
 
 int FOV = 70;
@@ -170,7 +172,7 @@ int main(int argc, char** argv) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_SINGLE);
 	glutInitWindowSize(1000, 600);
-	glutCreateWindow("GLUT Craft");
+	glutCreateWindow("GLUTCraft - A 3D Game inspired by Minecraft");
 	glutReshapeFunc(&reshape);
 	glutDisplayFunc(&display);
 	glutSpecialFunc(&specialKeys);

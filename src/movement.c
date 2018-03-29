@@ -1,3 +1,4 @@
+/* movement: Algorithm for moving the camera */
 #include <math.h>
 #include <glutcraft/movement.h>
 

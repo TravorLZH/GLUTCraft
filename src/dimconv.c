@@ -1,3 +1,4 @@
+/* dimconv: stands for Dimension Conversion */
 #include <assert.h>
 #include <glutcraft/dimconv.h>
 
